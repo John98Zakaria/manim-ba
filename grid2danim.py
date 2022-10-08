@@ -15,10 +15,10 @@ class My2DGridAnim(Scene):
         print(top_middle_grid.squares)
         top_middle_grid.move_to([-3, 0, 0])
         real = VGroup(*top_middle_grid.squares[1:-1, 1:-1].flatten())
-        real.set_stroke(GREEN, opacity=1)
+        real.set_fill(GREEN, opacity=1)
         exterior = Grid2DFuncs.get_edge_vgroup(top_middle_grid.squares, Grid2DItems.EXTERIOR)
 
-        exterior.set_stroke(RED, opacity=1)
+        exterior.set_fill(RED, opacity=1)
         top_middle_grid.scale(0.5)
         self.add(top_middle_grid)
         top_left_grid = top_middle_grid.copy()
