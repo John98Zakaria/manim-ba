@@ -16,6 +16,8 @@ class Grid2DItems(Enum):
     INTERIOR = auto()
     EXTERIOR = auto()
     LOWER_REAL_GHOST = auto()
+    LOWER_REAL_BOTH = auto()
+    TOP_GHOST_BOTH = auto()
 
 
 class Grid2DFuncs:
@@ -46,6 +48,10 @@ class Grid2DFuncs:
                 mask = np.ones(squares.shape, dtype=bool)
                 mask[1:-1, 1:-1] = False
                 selection = squares[mask]
+            case Grid2DItems.LOWER_REAL_BOTH:
+                selection = squares[:, 1]
+            case Grid2DItems.TOP_GHOST_BOTH:
+                selection = squares[:, -1]
         return selection
 
     @staticmethod

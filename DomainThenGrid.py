@@ -1,4 +1,4 @@
-import numpy as np
+import numpy.typing as npt
 from manim import *
 
 from Grid2D import Grid2D
@@ -8,7 +8,7 @@ from GridSelector import Grid2DFuncs, Grid2DItems
 class My2DGridAnim(MovingCameraScene):
 
     def construct(self):
-        grid_carrier = np.zeros((3, 3), dtype=Grid2D)
+        grid_carrier: npt.NDArray[Grid2D] = np.zeros((3, 3), dtype=Grid2D)
 
         # self.camera.frame.scale(3)
 
@@ -29,7 +29,7 @@ class My2DGridAnim(MovingCameraScene):
         domain_text.next_to(big_square, UP)
         #
         self.play(DrawBorderThenFill(VGroup(big_square, domain_text)))
-        top_left_grid = grid_carrier[0, 0]
+        top_left_grid: Grid2D = grid_carrier[0, 0]
         cell_brace = Brace(top_left_grid.squares[0, 3], LEFT)
         cell_text = Text("Cell")
         cell_text.next_to(cell_brace, LEFT)
@@ -59,8 +59,8 @@ class My2DGridAnim(MovingCameraScene):
         self.add(VGroup(*grid_carrier.flatten()))
         self.play(self.camera.frame.animate.scale(3).move_to(grid_carrier[1, 1]),
                   Uncreate(VGroup(cell_brace, cell_text, domain_text, ghost_text_mv)))
-        # right_grid = Grid2D((7, 7), 1)
-        # right_grid.move_to((7.5, 0, 0))
-        #
-        # self.play(Create(right_grid))
+        middle: Grid2D = grid_carrier[1, 1]
+
+
+        self.play(self.camera.frame.animate.scale(0.6).move_to(middle.get_top()))
         self.wait(3)
