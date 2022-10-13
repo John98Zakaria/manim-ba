@@ -6,7 +6,6 @@ from GridSelector import Grid2DFuncs, Grid2DItems
 
 
 class My2DGridAnim(Scene):
-
     def construct(self):
         for x in range(-7, 8):
             for y in range(-4, 5):
@@ -16,7 +15,9 @@ class My2DGridAnim(Scene):
         top_middle_grid.move_to([-3, 0, 0])
         real = VGroup(*top_middle_grid.squares[1:-1, 1:-1].flatten())
         real.set_fill(GREEN, opacity=1)
-        exterior = Grid2DFuncs.get_edge_vgroup(top_middle_grid.squares, Grid2DItems.EXTERIOR)
+        exterior = Grid2DFuncs.get_edge_vgroup(
+            top_middle_grid.squares, Grid2DItems.EXTERIOR
+        )
 
         exterior.set_fill(RED, opacity=1)
         top_middle_grid.scale(0.5)
@@ -26,6 +27,6 @@ class My2DGridAnim(Scene):
         top_left_grid.set_fill(BLUE, opacity=1)
         self.add(top_left_grid)
         top_right_grid = top_middle_grid.copy()
-        top_right_grid.next_to(top_middle_grid,RIGHT)
+        top_right_grid.next_to(top_middle_grid, RIGHT)
         self.add(top_right_grid)
         # self.play(Indicate(top_middle_grid.squares[0, 0]))

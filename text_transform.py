@@ -6,14 +6,13 @@ from GridSelector import Grid2DFuncs, Grid2DItems
 
 
 class TextTransform(MovingCameraScene):
-
     def construct(self):
 
         self.camera.frame.scale(1.1)
         domain_text = Text("Domain")
 
         real_domain_text = Text("Real Domain")
-        real_domain_text.set_fill(GREEN,opacity=1)
+        real_domain_text.set_fill(GREEN, opacity=1)
         transform = Transform(domain_text, real_domain_text)
         self.play(transform)
         self.play(domain_text.animate.shift(LEFT))

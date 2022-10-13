@@ -21,7 +21,6 @@ class Grid2DItems(Enum):
 
 
 class Grid2DFuncs:
-
     @staticmethod
     def get_edge(squares: np.ndarray, item: Grid2DItems):
         selection = np.zeros(0)

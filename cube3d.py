@@ -18,9 +18,7 @@ class TenDimensionalExample(ThreeDScene):
         # self.set_camera_orientation(phi=-60 * DEGREES,theta=5 *DEGREES, zoom=-0.5)
         self.set_camera_orientation(zoom=-0.5)
         # left.rotate_about_origin(-180 * DEGREES, Z_AXIS)
-        self.play(
-            FadeIn(left), FadeIn(right)
-        )
+        self.play(FadeIn(left), FadeIn(right))
         self.wait()
 
         # Because get_face() returns an array of Cubie objects, they must
@@ -28,11 +26,15 @@ class TenDimensionalExample(ThreeDScene):
         # of them simultaneously
 
         # interior = VGroup(*(left.cubies[1:-1,1:-1,1:-1]).flatten())
-        face = VGroup(*DomainDecomposer.select_attribute(left.cubies, CubeFace.TOP_UPPER_LEFT_CORNER))
-
-        self.play(
-            Indicate(face)
+        face = VGroup(
+            *DomainDecomposer.select_attribute(
+                left.cubies, CubeFace.TOP_UPPER_LEFT_CORNER
+            )
         )
-        face.set_opacity(0.3, )
+
+        self.play(Indicate(face))
+        face.set_opacity(
+            0.3,
+        )
 
         self.wait()

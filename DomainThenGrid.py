@@ -6,7 +6,6 @@ from GridSelector import Grid2DFuncs, Grid2DItems
 
 
 class My2DGridAnim(MovingCameraScene):
-
     def construct(self):
         grid_carrier: npt.NDArray[Grid2D] = np.zeros((3, 3), dtype=Grid2D)
 
@@ -43,7 +42,9 @@ class My2DGridAnim(MovingCameraScene):
         ghost_text_mv = domain_text.copy()
         ghost_text_mv.move_to(domain_text, ORIGIN)
 
-        self.play(domain_text.animate.shift(3 * LEFT), ghost_text_mv.animate.shift(3 * RIGHT))
+        self.play(
+            domain_text.animate.shift(3 * LEFT), ghost_text_mv.animate.shift(3 * RIGHT)
+        )
         real_domain_text = Text("Real Domain")
 
         ghost_domain_text = Text("Ghost Domain")
@@ -52,15 +53,19 @@ class My2DGridAnim(MovingCameraScene):
         real_domain_text.set_fill(GREEN, opacity=1)
         real_domain_text.move_to(domain_text)
         ghost_domain_text.move_to(ghost_text_mv)
-        self.play(Transform(domain_text, real_domain_text), Transform(ghost_text_mv, ghost_domain_text))
+        self.play(
+            Transform(domain_text, real_domain_text),
+            Transform(ghost_text_mv, ghost_domain_text),
+        )
         # self.add(ghost_text_mv)
 
         self.wait(3)
         self.add(VGroup(*grid_carrier.flatten()))
-        self.play(self.camera.frame.animate.scale(3).move_to(grid_carrier[1, 1]),
-                  Uncreate(VGroup(cell_brace, cell_text, domain_text, ghost_text_mv)))
+        self.play(
+            self.camera.frame.animate.scale(3).move_to(grid_carrier[1, 1]),
+            Uncreate(VGroup(cell_brace, cell_text, domain_text, ghost_text_mv)),
+        )
         middle: Grid2D = grid_carrier[1, 1]
-
 
         self.play(self.camera.frame.animate.scale(0.6).move_to(middle.get_top()))
         self.wait(3)

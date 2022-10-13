@@ -62,7 +62,9 @@ def build_grid_items(grid_carrier: npt.NDArray[Grid2D], side1: Grid2DItems):
     y, x = grid_carrier.shape
     for i in range(x):
         for j in range(y):
-            sides_grid[j, i] = Grid2DFuncs.get_edge_vgroup(grid_carrier[j, i].squares, side1)
+            sides_grid[j, i] = Grid2DFuncs.get_edge_vgroup(
+                grid_carrier[j, i].squares, side1
+            )
     return sides_grid
 
 
@@ -78,7 +80,6 @@ def flatten_n(iterable, index):
 
 
 class SyncComm(MovingCameraScene):
-
     def construct(self):
         grid_carrier = np.zeros((2, 3), dtype=Grid2D)
 
@@ -107,7 +108,7 @@ class SyncComm(MovingCameraScene):
 
         top_right: Grid2D = grid_carrier[0, -1]
         current_direction_text = Text("Direction:", weight=BOLD).scale(1.3)
-        current_direction = Text("LEFT", color=YELLOW)
+        current_direction = Text("RIGHT", color=YELLOW)  # Inverted lists names
 
         current_direction_text.next_to(top_right.get_right() + [2, 3, 0], RIGHT)
         current_direction.next_to(current_direction_text, DOWN, 7)
@@ -123,9 +124,13 @@ class SyncComm(MovingCameraScene):
         right_sides = build_grid_items(grid_carrier, Grid2DItems.GHOST_LEFT_EDGE)
         self.play(*[Indicate(edge) for edge in left_sides.flatten()], run_time=2)
         self.wait(1)
-        self.play(*[Indicate(edge) for edge in right_sides[:, 1:].flatten()], run_time=2)
-        self.wait(1)
         self.play(*(Create(arrow) for arrow in left_arrows))
+        self.absolute_front(left_arrows)
+        self.wait(1)
+        self.play(
+            *[Indicate(edge) for edge in right_sides[:, 1:].flatten()], run_time=2
+        )
+        self.wait(1)
         dots_animations = [make_dots_across_path(arrow) for arrow in left_arrows]
         self.play(*flatten_n(dots_animations, 0), run_time=1)
         for dots in flatten_n(dots_animations, 1):
@@ -134,30 +139,67 @@ class SyncComm(MovingCameraScene):
         self.remove(*left_arrows)
         right_sides = build_grid_items(grid_carrier, Grid2DItems.GHOST_RIGHT_EDGE)
         left_sides = build_grid_items(grid_carrier, Grid2DItems.REAL_LEFT_EDGE)
-        self.play(Transform(current_direction, Text("RIGHT", color=YELLOW).move_to(current_direction)))
+        self.play(
+            Transform(
+                current_direction, Text("LEFT", color=YELLOW).move_to(current_direction)
+            )
+        )
         self.play(*[Indicate(edge) for edge in left_sides[:, 1:].flatten()], run_time=2)
-        self.play(*[Indicate(edge) for edge in right_sides.flatten()], run_time=2)
         right_arrows = build_right_arrows(grid_carrier)
+        self.absolute_front(right_arrows)
         self.play(*((Create(arrow) for arrow in right_arrows)))
+        self.play(
+            *[Indicate(edge) for edge in right_sides[:, :-1].flatten()], run_time=2
+        )
         dots_animations = [make_dots_across_path(arrow) for arrow in right_arrows]
         self.play(*flatten_n(dots_animations, 0), run_time=1)
         for dots in flatten_n(dots_animations, 1):
             self.remove(*dots)
         self.remove(*right_arrows)
         self.wait(3)
-        self.play(Transform(current_direction, Text("DOWN", color=YELLOW).move_to(current_direction)))
+        self.play(
+            Transform(
+                current_direction, Text("DOWN", color=YELLOW).move_to(current_direction)
+            )
+        )
         self.wait(3)
 
         down_arrows = build_down_arrows(grid_carrier)
         lower_sides = build_grid_items(grid_carrier, Grid2DItems.LOWER_REAL_BOTH)
         top_sides = build_grid_items(grid_carrier, Grid2DItems.TOP_GHOST_BOTH)
-        self.play(Transform(current_direction, Text("DOWN", color=YELLOW).move_to(current_direction)))
-        self.play(*[Indicate(edge, scale_factor=1.1) for edge in lower_sides[0:, ].flatten()], run_time=2)
-        self.play(*[Indicate(edge, scale_factor=1.1) for edge in top_sides[1:, ].flatten()], run_time=2)
+        self.play(
+            Transform(
+                current_direction, Text("DOWN", color=YELLOW).move_to(current_direction)
+            )
+        )
+        self.play(
+            *[
+                Indicate(edge, scale_factor=1.1)
+                for edge in lower_sides[
+                    0:,
+                ].flatten()
+            ],
+            run_time=2,
+        )
         self.play(*((Create(arrow) for arrow in down_arrows)))
+        self.absolute_front(down_arrows)
+        self.play(
+            *[
+                Indicate(edge, scale_factor=1.1)
+                for edge in top_sides[
+                    1:,
+                ].flatten()
+            ],
+            run_time=2,
+        )
+
         dots_animations = [make_dots_across_path(arrow) for arrow in down_arrows]
         self.play(*flatten_n(dots_animations, 0), run_time=1)
         for dots in flatten_n(dots_animations, 1):
             self.remove(*dots)
-        self.remove(*right_arrows)
+        self.remove(*down_arrows)
         self.wait(3)
+
+    def absolute_front(self, arrows_list):
+        for arrow in arrows_list:
+            self.add_foreground_mobject(arrow)

@@ -45,7 +45,6 @@ class CubeFace(Enum):
 
 
 class DomainDecomposer:
-
     @staticmethod
     def select_attribute(cubies: np.ndarray, face: CubeFace, flatten=True):
         selected_object = np.zeros(0)
