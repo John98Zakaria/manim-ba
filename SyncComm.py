@@ -159,9 +159,7 @@ class SyncComm(MovingCameraScene):
         right_arrows = build_right_arrows(grid_carrier)
         self.absolute_front(right_arrows[2:])
         self.play(*((Create(arrow) for arrow in right_arrows[2:])))
-        self.play(
-            *[Indicate(edge) for edge in right_sides[:, 0].flatten()], run_time=2
-        )
+        self.play(*[Indicate(edge) for edge in right_sides[:, 0].flatten()], run_time=2)
         dots_animations = [make_dots_across_path(arrow) for arrow in right_arrows[2:]]
         self.play(*flatten_n(dots_animations, 0), run_time=1)
         for dots in flatten_n(dots_animations, 1):
@@ -172,9 +170,7 @@ class SyncComm(MovingCameraScene):
         right_arrows = build_right_arrows(grid_carrier)
         self.play(*((Create(arrow) for arrow in right_arrows[:2])))
         self.absolute_front(right_arrows[:2])
-        self.play(
-            *[Indicate(edge) for edge in right_sides[:, 1].flatten()], run_time=2
-        )
+        self.play(*[Indicate(edge) for edge in right_sides[:, 1].flatten()], run_time=2)
         dots_animations = [make_dots_across_path(arrow) for arrow in right_arrows[:2]]
         self.play(*flatten_n(dots_animations, 0), run_time=1)
         for dots in flatten_n(dots_animations, 1):
@@ -196,12 +192,7 @@ class SyncComm(MovingCameraScene):
             )
         )
         self.play(
-            *[
-                Indicate(edge, scale_factor=1.1)
-                for edge in lower_sides[
-                            0,:
-                            ].flatten()
-            ],
+            *[Indicate(edge, scale_factor=1.1) for edge in lower_sides[0, :].flatten()],
             run_time=2,
         )
         self.play(*((Create(arrow) for arrow in down_arrows)))
@@ -210,8 +201,8 @@ class SyncComm(MovingCameraScene):
             *[
                 Indicate(edge, scale_factor=1.1)
                 for edge in top_sides[
-                            1:,
-                            ].flatten()
+                    1:,
+                ].flatten()
             ],
             run_time=2,
         )

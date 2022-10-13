@@ -127,74 +127,137 @@ class SyncComm(MovingCameraScene):
 
         self.add(*grid_carrier.flatten(), *grid_texts, *state_texts)
 
-        self.wait(1)
-
         self.play(
             *[
                 Transform(state, Text("COMM1", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
         self.play(
             *[
                 Transform(state, Text("FORCE", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
         self.play(
             *[
                 Transform(state, Text("COMM2", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
         self.play(
             *[
                 Transform(state, Text("INTEGRATE2", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
         self.play(
             *[
                 Transform(state, Text("COMM2", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
         self.play(
             *[
                 Transform(state, Text("COMM1", color=BLUE).move_to(state))
                 for state in state_texts
             ]
         )
-        self.wait(1)
 
         self.play(
-            ReplacementTransform(
-                state_texts[2], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[2])
+            Transform(
+                state_texts[2], Text("COMM1: RIGHT", color=BLUE).move_to(state_texts[2])
             ),
-            ReplacementTransform(
+            Transform(
                 state_texts[1], Text("COMM1: RIGHT", color=BLUE).move_to(state_texts[1])
             ),
-            ReplacementTransform(
+            Transform(
                 state_texts[0], Text("COMM1: RIGHT", color=BLUE).move_to(state_texts[0])
             ),
-            ReplacementTransform(
-                state_texts[4], Text("COMM1: UP", color=BLUE).move_to(state_texts[4])
+            Transform(
+                state_texts[4], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[4])
             ),
         )
-        self.wait(1)
         down_arrows = build_down_arrows(grid_carrier)
         up_arrows = build_up_arrows(grid_carrier)
         right_arrows = build_right_arrows(grid_carrier)
         left_arrows = build_left_arrows(grid_carrier)
+        left_arrows[0].get_center()
+        left_arrow_free = CurvedArrow(
+            grid_carrier[0, -1].squares[-1, 3].get_center() + [3, 0, 0],
+            grid_carrier[0, -1].squares[-1, 3].get_center(),
+        )
+
+        self.play(Create(left_arrow_free.set_color(BLUE)))
+        self.wait(1)
+        self.play(Create(down_arrows[1].set_color(BLUE)))
+        self.wait(1)
+        self.play(Create(right_arrows[0]))
+        dots_animation, dots = make_dots_across_path(right_arrows[0])
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(right_arrows[0])
+
+        self.play(Transform(
+            state_texts[0], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[0])
+        ), )
+
+        self.play(Create(right_arrows[2]))
+        self.wait(1)
+        dots_animation, dots = make_dots_across_path(right_arrows[2])
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(right_arrows[2])
+
+
+
+        self.wait(1)
+        dots_animation, dots = make_dots_across_path(left_arrow_free)
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(left_arrow_free)
+
+        self.play(
+            Transform(
+                state_texts[2], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[2])
+            ),
+            Transform(
+                state_texts[1], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[1])
+            ),
+
+        )
+
+        self.wait(1)
+
+        self.play(Create(left_arrows[2]))
+        dots_animation, dots = make_dots_across_path(left_arrows[2])
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(left_arrows[2])
+
+        self.play(Transform(
+                state_texts[0], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[0])
+            ),)
 
         self.play(Create(left_arrows[0]))
-        self.wait(1)
-        self.play(Create(up_arrows[1]))
-        self.wait(1)
+        dots_animation, dots = make_dots_across_path(left_arrows[0])
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(left_arrows[0])
 
+        self.play(
+            Transform(
+                state_texts[2], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[2])
+            ),
+            Transform(
+                state_texts[1], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[1])
+            ),
 
+        )
+
+        dots_animation, dots = make_dots_across_path(down_arrows[1])
+        self.play(dots_animation, run_time=1)
+        self.remove(*dots)
+        self.remove(down_arrows[1])
+
+        self.wait(3)
