@@ -198,9 +198,11 @@ class SyncComm(MovingCameraScene):
         self.remove(*dots)
         self.remove(right_arrows[0])
 
-        self.play(Transform(
-            state_texts[0], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[0])
-        ), )
+        self.play(
+            Transform(
+                state_texts[0], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[0])
+            ),
+        )
 
         self.play(Create(right_arrows[2]))
         self.wait(1)
@@ -208,8 +210,6 @@ class SyncComm(MovingCameraScene):
         self.play(dots_animation, run_time=1)
         self.remove(*dots)
         self.remove(right_arrows[2])
-
-
 
         self.wait(1)
         dots_animation, dots = make_dots_across_path(left_arrow_free)
@@ -224,7 +224,6 @@ class SyncComm(MovingCameraScene):
             Transform(
                 state_texts[1], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[1])
             ),
-
         )
 
         self.wait(1)
@@ -235,9 +234,11 @@ class SyncComm(MovingCameraScene):
         self.remove(*dots)
         self.remove(left_arrows[2])
 
-        self.play(Transform(
+        self.play(
+            Transform(
                 state_texts[0], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[0])
-            ),)
+            ),
+        )
 
         self.play(Create(left_arrows[0]))
         dots_animation, dots = make_dots_across_path(left_arrows[0])
@@ -252,7 +253,6 @@ class SyncComm(MovingCameraScene):
             Transform(
                 state_texts[1], Text("COMM1: DOWN", color=BLUE).move_to(state_texts[1])
             ),
-
         )
 
         dots_animation, dots = make_dots_across_path(down_arrows[1])
