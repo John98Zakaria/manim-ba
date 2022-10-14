@@ -1,0 +1,1 @@
+manim -pqh SyncCommBad.py && manim -pgh AsyncComm.py && manim -pqh SyncComm.py && manim -pqh DomainThenGrid.py
