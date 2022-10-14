@@ -211,28 +211,29 @@ class SyncComm(MovingCameraScene):
         self.remove(*dots)
         self.remove(right_arrows[2])
 
+        self.play(Transform(
+            state_texts[1], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[1])
+        ))
+
         self.wait(1)
         dots_animation, dots = make_dots_across_path(left_arrow_free)
-        self.play(dots_animation, run_time=1)
+        dots_animation2, dots2 = make_dots_across_path(left_arrows[2])
+        self.play(dots_animation, Create(left_arrows[2]), run_time=1)
+        self.play(dots_animation2, run_time=1)
+
         self.remove(*dots)
+        self.remove(*dots2)
+        self.remove(left_arrows[2])
         self.remove(left_arrow_free)
 
         self.play(
             Transform(
                 state_texts[2], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[2])
             ),
-            Transform(
-                state_texts[1], Text("COMM1: LEFT", color=BLUE).move_to(state_texts[1])
-            ),
+
         )
 
         self.wait(1)
-
-        self.play(Create(left_arrows[2]))
-        dots_animation, dots = make_dots_across_path(left_arrows[2])
-        self.play(dots_animation, run_time=1)
-        self.remove(*dots)
-        self.remove(left_arrows[2])
 
         self.play(
             Transform(

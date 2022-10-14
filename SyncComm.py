@@ -121,30 +121,30 @@ class SyncComm(MovingCameraScene):
 
         # RIGHT SIDE
 
-        # left_arrows = build_left_arrows(grid_carrier)
-        # left_sides = build_grid_items(grid_carrier, Grid2DItems.REAL_RIGHT_EDGE)
-        # right_sides = build_grid_items(grid_carrier, Grid2DItems.GHOST_LEFT_EDGE)
-        # self.play(*[Indicate(edge) for edge in left_sides[:, ::2].flatten()], run_time=2)
-        # self.wait(1)
-        # self.play(*(Create(arrow) for arrow in left_arrows[:2]))
-        # self.absolute_front(left_arrows[:2])
-        # self.wait(1)
-        # self.play(
-        #     *[Indicate(edge) for edge in right_sides[:, 1].flatten()], run_time=2
-        # )
-        # self.wait(1)
-        # dots_animations = [make_dots_across_path(arrow) for arrow in left_arrows[:2]]
-        #
-        # self.play(*flatten_n(dots_animations, 0), run_time=1)
-        # self.remove(*left_arrows[:2])
-        # self.remove_dots(dots_animations)
-        # self.play(*(Create(arrow) for arrow in left_arrows[2:]))
-        #
-        # dots_animations = [make_dots_across_path(arrow) for arrow in left_arrows[2:]]
-        #
-        # self.play(*flatten_n(dots_animations, 0), run_time=1)
-        # self.remove_dots(dots_animations)
-        # self.remove(*left_arrows[2:])
+        left_arrows = build_left_arrows(grid_carrier)
+        left_sides = build_grid_items(grid_carrier, Grid2DItems.REAL_RIGHT_EDGE)
+        right_sides = build_grid_items(grid_carrier, Grid2DItems.GHOST_LEFT_EDGE)
+        self.play(*[Indicate(edge) for edge in left_sides[:, ::2].flatten()], run_time=2)
+        self.wait(1)
+        self.play(*(Create(arrow) for arrow in left_arrows[:2]))
+        self.absolute_front(left_arrows[:2])
+        self.wait(1)
+        self.play(
+            *[Indicate(edge) for edge in right_sides[:, 1].flatten()], run_time=2
+        )
+        self.wait(1)
+        dots_animations = [make_dots_across_path(arrow) for arrow in left_arrows[:2]]
+
+        self.play(*flatten_n(dots_animations, 0), run_time=1)
+        self.remove(*left_arrows[:2])
+        self.remove_dots(dots_animations)
+        self.play(*(Create(arrow) for arrow in left_arrows[2:]))
+
+        dots_animations = [make_dots_across_path(arrow) for arrow in left_arrows[2:]]
+
+        self.play(*flatten_n(dots_animations, 0), run_time=1)
+        self.remove_dots(dots_animations)
+        self.remove(*left_arrows[2:])
 
         # LEFT SIDE
 
