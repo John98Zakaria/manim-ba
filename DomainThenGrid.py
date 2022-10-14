@@ -67,5 +67,5 @@ class My2DGridAnim(MovingCameraScene):
         )
         middle: Grid2D = grid_carrier[1, 1]
 
-        self.play(self.camera.frame.animate.scale(0.6).move_to(middle.get_top()))
         self.wait(3)
+        # self.play(self.camera.frame.animate.scale(0.6).move_to(middle.get_top()))
